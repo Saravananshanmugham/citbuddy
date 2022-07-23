@@ -537,7 +537,7 @@ def delete_assignment(id):
         cur=con.cursor()
         cur.execute("select * from assignments where pid=?",(id))
         data = cur.fetchall()
-        cwd = os.getcwd()+"/static/assignments"
+        cwd = os.getcwd()+"/static"
         for val in data:
             path = os.path.join(cwd,val[1])
             print(val[1])
