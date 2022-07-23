@@ -271,9 +271,9 @@
       <h3>General Topics</h3>
       {% if usrgrp == 'A' or usrgrp=='Z' %}
           <p><a href ="/view_userlist"><img src="\static\images\caret-right.svg"> View Student Records</a></p>
-          <p><a href ="/static/ActiveTimeTable/Active_Time_Table.pdf"><img src="\static\images\caret-right.svg"> Active Semester Time Table</a></p>
+          <p><a href ="/static/ActiveTimeTable/Active_Time_Table.pdf" target="_blank" rel="noopener noreferrer"><img src="\static\images\caret-right.svg"> Active Semester Time Table</a></p>
         {% elif usrgrp == 'S' %}
-          <p><a href ="/static/ActiveTimeTable/Active_Time_Table.pdf"><img src="\static\images\caret-right.svg"> Active Semester Time Table</a></p>
+          <p><a href ="/static/ActiveTimeTable/Active_Time_Table.pdf" target="_blank" rel="noopener noreferrer"><img src="\static\images\caret-right.svg"> Active Semester Time Table</a></p>
       {% elif usrgrp=='F' %}
           <p>This section options is for Admins and Super User Only.</p>
       {% endif %}
