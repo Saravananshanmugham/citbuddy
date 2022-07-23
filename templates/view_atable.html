@@ -1,0 +1,76 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <style>
+        #customers {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 70%;
+        }
+        
+        #customers td, #customers th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #customers tr:hover {background-color: rgb(221, 219, 109);}
+        
+        #customers th {
+          padding-top: 8px;
+          padding-bottom: 8px;
+          text-align: left;
+          background-color: #04AA6D;
+          color: white;}
+ 
+         table {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 70%;
+            }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+          }
+
+        </style>
+
+    <title>Student Information</title>  
+</head>  
+
+<table class="center">
+    <tr>
+        <td><h3>Attendance Master</h3>     </td>
+        <td style="text-align:right" colspan=2><a href="/menu">Go to Main Menu</a>  </td>
+    </tr>
+</table>
+
+<table id="customers" class="center">
+     
+    {% for row in rows %}  
+        <tr>  
+            <td>{{row[0]}}</td>  
+            <td>{{row[1]}}</td>  
+            <td>{{row[2]}}</td>  
+            <td>{{row[3]}}</td>  
+            <td>{{row[4]}}</td>  
+            <td>{{row[5]}}</td>  
+            <td>{{row[6]}}</td>  
+            <td>{{row[7]}}</td>  
+            <td>{{row[8]}}</td>  
+        </tr>  
+      
+    {% endfor %}  
+</table>  
+<br>
+<table class="center">
+    <tr>
+        <td style="text-align:left"><a href="/menu">Go to Main Menu</a>  </td>
+    </tr>
+</table>
+
+  
+</body>  
+</html>  
