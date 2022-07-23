@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>IR4.0 Project Portal Home Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- Load an icon library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+    
+    .navbar {
+      width: 100%;
+      background-color: #555;
+      overflow: auto;
+    }
+    
+    .navbar a {
+      float: left;
+      padding: 12px;
+      color: white;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    
+    .navbar a:hover {
+      background-color: #000;
+    }
+    
+    .active {
+      background-color: green;
+    }
+    
+    @media screen and (max-width: 500px) {
+      .navbar a {
+        float: none;
+        display: block;
+      }
+    }
+
+    table, tr,td,th {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 70%;
+    }
+
+    table.center {
+        margin-left: auto; 
+        margin-right: auto;
+    }
+    
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: green;
+      color: white;
+      text-align: center;
+    }
+    
+    /*****************************
+    *	Horizontal News Ticker
+    *****************************/
+
+    .ticker-wrapper-h {
+    display: flex;	
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #1c6547;
+    }   
+
+    .ticker-wrapper-h .heading{
+        background-color: #1c6547;
+        color: #fff;
+        padding: 5px 10px;
+        flex: 0 0 auto;
+        z-index: 1000;
+    }
+    
+    .ticker-wrapper-h .heading:after{
+        content: "";
+        position: absolute;
+        top: 0;
+        border-left: 20px solid #1c6547;
+        border-top: 17px solid transparent;
+        border-bottom: 15px solid transparent;
+    }
+
+    .news-ticker-h{
+        display: flex;
+        margin:0;
+        padding: 0;
+        padding-left: 90%;
+        z-index: 999;
+        
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-name: tic-h;
+        animation-duration: 30s;      
+    }
+
+    .news-ticker-h:hover { 
+        animation-play-state: paused; 
+    }
+
+    .news-ticker-h li{
+        display: flex;
+        width: 80%;
+        align-items: center;
+        white-space: nowrap;
+        padding-left: 20px;
+    }
+
+    .news-ticker-h li a{
+        color: #212529;
+        font-weight: bold;
+    }
+
+    @keyframes tic-h {
+        0% {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+            visibility: visible;
+        }
+        100% {
+            -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-100%, 0, 0);
+        }
+    }
+
+
+        /*****************************
+        *	vertical news ticker
+        ******************************/
+        .ticker-wrapper-v{
+            display: flex;	
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #1c6547;
+            height: 36px;
+        }
+
+        .ticker-wrapper-v .heading{
+            background-color: #1c6547;
+            color: #fff;
+            padding: 5px 10px;
+            flex: 0 0 auto;
+            z-index: 1000;
+        }
+        .ticker-wrapper-v .heading:after{
+            content: "";
+            position: absolute;
+            top: 0;
+            border-left: 20px solid #1c6547;
+            border-top: 17px solid transparent;
+            border-bottom: 15px solid transparent;
+        }
+
+        .news-ticker-v{
+            display: flex;
+            flex-wrap: wrap;
+            margin:0;
+            padding: 0;
+            z-index: 999;
+            
+            animation: tic-v 10s cubic-bezier(1, 0, .5, 0) infinite;
+        }
+        .news-ticker-v:hover { 
+            animation-play-state: paused; 
+        }
+
+        .news-ticker-v li{
+            display: flex;
+            width: 100%;
+            line-height: 30px;
+            align-items: center;
+            white-space: nowrap;
+            padding-left: 20px;
+        }
+
+        .news-ticker-v li a{
+            color: #212529;
+            font-weight: bold;
+        }
+
+        @keyframes tic-v {
+            0%   {margin-top: 0;}
+            20%  {margin-top: -30px;}
+            40%  {margin-top: -60px;}
+            60%  {margin-top: -90px;}
+            80%  {margin-top: -120px;}
+            100% {margin-top: 0;}
+        }
+
+        table {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 70%;
+            }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+          }
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a class="active" href="/menu"><i class="fa fa-fw fa-home"></i> {{ name}} Home</a>
+        <a href="/view_contactus"><i class="fa fa-fw fa-envelope"></i> Contact Us</a>
+        <a href="/logout"><i class="fa fa-fe fa-user"></i> Logout</a>
+        
+      </div>
+<div class="jumbotron text-center" style="overflow-x: auto;">
+  
+  <table id="customers" class="center">
+    <tr>
+        <td>
+            <h2>Hi {{ name }}, Welcome to Buddy Portal</h2>
+        </td>
+    </tr>
+    <tr>
+        <td><p>This Buddy Portal is developed by Akshay Kumar (717621080xx), Karthick Srinivas S (71762108018), and 
+          R Subramanian (717621080xx) from Artifical Intelligence & Data Science Department 
+          as part of Industrial Revolution 4.0 Subject project.</p> </td>
+    </tr>
+</table>
+</div>
+  
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm-4">
+      <h3>Attendance Management</h3>
+      {% if usrgrp == 'A' or usrgrp=='Z' %}
+        <p><a href="/upload_attendance"><img src="\static\images\caret-right.svg"> Attendance Data Upload</a></p>
+        <p><a href="/upload_course"> <img src="\static\images\caret-right.svg"> Course Data Upload</a></p>
+      {% elif usrgrp == 'S' or usrgrp=='F' %}
+        <p>This section options is for Admins and Super User Only.</p>
+      {% endif %}
+    </div>
+    
+    <div class="col-sm-4">
+      <h3>Assignment Management</h3>
+      {% if usrgrp == 'F' or usrgrp=='Z' %}
+        <p><a href="/upload_assignment"><img src="\static\images\caret-right.svg"> Assignment Document Upload</a></p>
+        <p><a href="/view_assignment"><img src="\static\images\caret-right.svg"> View Uploaded Assignments</a></p>
+      {% elif usrgrp == 'A' or usrgrp=='S' %}
+        <p><a href="/view_assignment"><img src="\static\images\caret-right.svg"> View Uploaded Assignments</a></p>
+      {% endif %}
+    </div>
+    
+    <div class="col-sm-4">
+      <h3>Statistics</h3>        
+      {% if usrgrp == 'A' or usrgrp=='S' or usrgrp=='F' %}
+        <p><a href="/attendance_stats"><img src="\static\images\caret-right.svg"> Attendance Statistics</a></p>
+      {% elif usrgrp=='Z' %}
+        <p>This section options is note for Super User.</p>
+
+        {% endif %}
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>General Topics</h3>
+      {% if usrgrp == 'A' or usrgrp=='Z' %}
+          <p><a href ="/view_userlist"><img src="\static\images\caret-right.svg"> View Student Records</a></p>
+          <p><a href ="/static/ActiveTimeTable/Active_Time_Table.pdf"><img src="\static\images\caret-right.svg"> Active Semester Time Table</a></p>
+        {% elif usrgrp == 'S' %}
+          <p><a href ="/static/ActiveTimeTable/Active_Time_Table.pdf"><img src="\static\images\caret-right.svg"> Active Semester Time Table</a></p>
+      {% elif usrgrp=='F' %}
+          <p>This section options is for Admins and Super User Only.</p>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-4">
+      {% if usrgrp == 'A' or usrgrp=='Z' %}
+        <h3>Administration Tasks</h3>
+        <p><a href="/upgrade_profile"><img src="\static\images\caret-right.svg"> Upgrade Student Profile to Administrator</a></p>
+        <p><a href="/add_news"><img src="\static\images\caret-right.svg"> Add New Department or Club News</a></p>
+        <p><a href="deactivate_news"><img src="\static\images\caret-right.svg"> Deactivate Department or Club News</a></p>
+      {% elif usrgrp == 'F' or usrgrp=='S' %}
+        &nbsp;
+      {% endif %}
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ticker-wrapper-v">
+        <div class="heading">Department News</div>
+        <ul class="news-ticker-v">
+          {% for row in deptnews %}  
+            {% if row[2]|length > 1 %}
+              <li><a href="{{row[2]}}" target="_blank" rel="noopener noreferrer">{{row[1]}}</a></li>  
+            {% else %}
+              <li>{{row[1]}}</li>  
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<br>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ticker-wrapper-v">
+        <div class="heading">Club News&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>
+        <ul class="news-ticker-v">
+          {% for row in clubnews %}  
+            <li><a href="{{row[2]}}" target="_blank" rel="noopener noreferrer">{{row[1]}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+        {% if usrgrp == 'F' %}
+        <h4>Faculty Profile</h4>
+        {% elif usrgrp == 'A' %}
+          <h4>Admin Profile</h4>
+        {% elif usrgrp =='S' %}
+          <h4>Student Profile</h4>
+        {% elif usrgrp == 'Z' %}
+          <h4>Super User Profile</h4>
+        {% endif %}     
+</div>
+</body>
+</html>
+

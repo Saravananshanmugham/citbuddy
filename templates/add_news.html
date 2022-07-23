@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Add News</title>
+    <link rel="stylesheet"  href="{{ url_for('static', filename='css/style1.css') }}">
+   
+      
+  </head>
+  <body>
+    <div class="center">
+      <h2>Add News</h2>
+      <form action = "/save_news" method="post">
+        <div>&nbsp;</div>
+        <div class="radio">
+          <span></span>
+          <input type="radio" id="usergroup1" name="news" value="D" required>
+          <label for="age1">Department News</label> &nbsp;&nbsp;&nbsp;
+          <input type="radio" id="usergroup2" name="news" value="C" required>
+          <label for="usergroup2">Club News</label>
+          <span></span> 
+        </div>
+
+        <div class="txt_field">
+          <input type="text" name="newstext" required>
+          <span></span>
+          <label>News Text</label>
+        </div>
+
+
+        <div class="txt_field">
+          <input type="text" name="srcurl">
+          <span></span>
+          <label>Source URL</label>
+        </div>
+        <div><span>&nbsp;</span></div>
+        <input type="submit" value="Add News">
+        <div><span>&nbsp;</span></div>
+      </div>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <style>
+        #customers {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 70%;
+        }
+        
+        #customers td, #customers th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+        
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
+        
+        #customers tr:hover {background-color: rgb(221, 219, 109);}
+        
+        #customers th {
+          padding-top: 8px;
+          padding-bottom: 8px;
+          text-align: left;
+          background-color: #04AA6D;
+          color: white;}
+ 
+         table {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 70%;
+            }
+
+        table.center {
+            margin-left: auto; 
+            margin-right: auto;
+          }
+
+        </style>
+
+    <title>Student Information</title>  
+</head>  
+
+<table class="center">
+    <tr>
+        <td><h3>User Information</h3>     </td>
+        <td style="text-align:right" colspan=2><a href="/menu">Go to Main Menu</a>  </td>
+    </tr>
+</table>
+
+<table id="customers" class="center">
+    <tr>  
+        <th style="width:25%">Email ID</th>  
+        <th style="width:20%">Enrollment Number / ID </th>  
+        <th style="width:25%">Name</th>  
+        <th style="width:10%">Password</th>  
+        <th style="width:10%">Department</th>  
+        <th style="width:10%">User Group</th>
+    </tr>  
+      
+    {% for row in rows %}  
+        <tr>  
+            <td>{{row[0]}}</td>  
+            <td>{{row[1]}}</td>  
+            <td>{{row[2]}}</td>  
+            <td>{{row[3]}}</td>  
+
+            {% if row[4] ==1 %}
+                <td>AI & DS</td> 
+            {% elif row[4]==2 %}
+                <td>CS</td>  
+            {% elif row[4]==3 %}
+                <td>EEE</td>  
+            {% elif row[4]==99 %}
+                <td>&nbsp;</td>  
+
+            {% endif %}
+
+
+            {% if row[5] =='F' %}
+                <td>Faculty</td> 
+            {% elif row[5]=='A' %}
+                <td>Admin User</td>  
+            {% elif row[5]=='S' %}
+                <td>Student</td>  
+            {% elif row[5]=='Z' %}
+                <td>Super User</td>  
+            {% else %}
+                <td>Not Defined </td>  
+            {% endif %}
+        </tr>  
+      
+    {% endfor %}  
+</table>  
+<br>
+<table class="center">
+    <tr>
+        <td style="text-align:left"><a href="/menu">Go to Main Menu</a>  </td>
+    </tr>
+</table>
+
+  
+</body>  
+</html>  

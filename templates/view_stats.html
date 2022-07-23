@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <title>Stats</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+		<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+    </head>
+    <body>
+       
+        {% if data %}
+            <div class="row">
+                <div class="col-md-offset-3 col-md-5">
+                <h3 class="page-header text-primary "><span class="fa fa-image">  Attendance Status</span></h3>
+                 <table class="table table-bordered">
+                      <thead>
+                            <tr>
+                            <th>Sl.No</th>
+                            <th>Student Code</th>
+                            <th>Subject Code</th>
+                            <th>Course Duration</th>
+                            <th>Total Present Hours</th>
+                            <th>Total Absent Hours</th>
+                            <th>Total Course Hours</th>
+                            <th>% Attendance</th>
+                            <th>Hours Required</th>
+                            <th>Hours Balance</th>
+
+                        </tr>
+                        </thead>
+                     {% for res in data %}
+                     {% set i=loop.index %}
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center">{{i}}</td>
+                                <td style="text-align:center">{{res[0]}}</a></td>
+                                <td style="text-align:center">{{res[1]}}</td>
+                                <td style="text-align:center">{{res[2]}}</td>
+                                <td style="text-align:center">{{res[3]}}</td>
+                                <td style="text-align:center">{{res[4]}}</td>
+                                <td style="text-align:center">{{res[5]}}</td>
+
+                                {% set percentage = res[3] / res[5] * 100 %}
+                                <td style="text-align:center">{{'%0.2f' % percentage|float}}%</td>
+
+                                {% set Required_hours = res[2] * 0.8 %}
+                                <td style="text-align:center">{{'%0.2f' % Required_hours|float}}</td>
+
+                                {% set Bal_hours = Required_hours - res[3] %}
+                                <td style="text-align:center">{{'%0.2f' % Bal_hours|float}}</td>
+
+
+                            </tr>
+                        </tbody>
+                {% endfor %}
+                      </table>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-offset-3 col-md-5">
+            <h6 class="page-header text-primary "><span class="fa fa-image"><a href="/menu">Go to Main Menu</a></span></h6>
+            </div>
+    </body>
+</html>
+<script>
+    $(document).ready(function(){
+        $(".alert").hide(4000);
+    });
+</script>

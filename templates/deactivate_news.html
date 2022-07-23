@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>Deactivate News</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{url_for('static',filename='myfont/css/all.min.css')}}">
+		<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+    </head>
+    <body>
+        <div class="col-md-offset-3 col-md-5" style="margin-top:50px">
+            <form action="/deactivate_news" method="POST" enctype="multipart/form-data">
+                <h3 class="page-header text-primary">News Deactivation</h3>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category,message in messages %}
+                            <div class="alert alert-{{category}}">{{message}}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>
+                    <div class="row">
+                        <input type="radio" id="usergroup1" name="news" value="D" required checked>
+                        <label for="age1">Department News</label> &nbsp;&nbsp;&nbsp;
+                        <input type="radio" id="usergroup2" name="news" value="C" required>
+                        <label for="usergroup2">Club News</label>
+                      <span></span> 
+                    </div>
+                </td></tr></table>
+                <br>    
+                 <div class="form-group">
+                    <label>Search News...(Pattern Search and <strong>!NOT</strong> Case Sensitive) </label>
+                    <input type="text" class="form-control" name="newstxt" >
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Search" class="btn btn-primary btn-block">
+                    <br>               
+                    <a href="/menu">Go to Main Menu</a>  
+                    
+                </div>
+            </form>
+        </div>
+        
+        {% if data %}
+            <div class="row">
+            <div class="col-md-offset-3 col-md-5">
+                <h4 class="page-header text-primary "><span class="fa fa-image">Active News List, Use Search Option to Get Focused List &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url_for('deactivate_news')}}">[Reset & Show Full List]</a></span></h4>
+                 <table class="table table-bordered">
+                      <thead>
+                            <tr>
+                            <th>S.No</th>
+                            <th>News Text</th>
+                            <th>Deactivate</th>
+                        </tr>
+                        </thead>
+                        {% for res in data %}
+                            {% set i=loop.index %}
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center">{{i}}</td>
+                                        <td>{{res['Newstext']}}
+                                        <td><a href="{{url_for('deactivate_news_update', id = res['pid'], newstype=newstype)}}" class="btn btn-danger btn-block">Deactivate</a></td>
+                                    </tr>
+                                </tbody>
+                        {% endfor %}
+                      </table>
+            </div>
+        </div>
+        {%else%}
+        <div class="row">
+            <div class="col-md-offset-3 col-md-5">
+                <h4 class="page-header text-primary "><span class="fa fa-image">Student List, Use Search Option to Get Focused List &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url_for('deactivate_news')}}">[Reset & Show Full List]</a></span></h4>
+                 <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <tr>
+                                <th>S.No</th>
+                                <th>News Text</th>
+                                <th>Deactivate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center">1</td>
+                                <td colspan=3>No Records for the Search Criteria </td>
+                            </tr>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% endif %}
+    
+    </body>
+
+</html>
+<script>
+    $(document).ready(function(){
+        $(".alert").hide(4000);
+    });
+</script>

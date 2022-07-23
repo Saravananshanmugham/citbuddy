@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <title>Profile Upgrade</title>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{url_for('static',filename='myfont/css/all.min.css')}}">
+		<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+    </head>
+    <body>
+        <div class="col-md-offset-3 col-md-5" style="margin-top:50px">
+            <form action="/upgrade_profile" method="POST" enctype="multipart/form-data">
+                <h3 class="page-header text-primary">Upgrade Student Profile to Admin Profile</h3>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category,message in messages %}
+                            <div class="alert alert-{{category}}">{{message}}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                 <div class="form-group">
+                    <label>Search Student ID.. Input complete ID number for exact Search (or) Partial data for pattern search </label>
+                    <input type="text" class="form-control" name="Id_no" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Search" class="btn btn-primary btn-block">
+                    <br>               
+                    <a href="/menu">Go to Main Menu</a>  
+                    
+                </div>
+            </form>
+        </div>
+        
+        {% if data %}
+            <div class="row">
+            <div class="col-md-offset-3 col-md-5">
+                <h4 class="page-header text-primary "><span class="fa fa-image">Student List, Use Search Option to Get Focused List &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url_for('upgrade_profile')}}">[Reset & Show Full List]</a></span></h4>
+                 <table class="table table-bordered">
+                      <thead>
+                            <tr>
+                            <th>S.No</th>
+                            <th>Student ID</th>
+                            <th>User Name</th>
+                            <th>Upgrade</th>
+                        </tr>
+                        </thead>
+                        {% for res in data %}
+                            {% set i=loop.index %}
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center">{{i}}</td>
+                                        <td>{{res['id_no']}}</a></td>
+                                        <td>{{res['Name']}}
+                                        <td><a href="{{url_for('upgrade_profile_update', id = res['Id_no'])}}" class="btn btn-danger btn-block">Upgrade</a></td>
+                                    </tr>
+                                </tbody>
+                        {% endfor %}
+                      </table>
+            </div>
+        </div>
+        {%else%}
+        <div class="row">
+            <div class="col-md-offset-3 col-md-5">
+                <h4 class="page-header text-primary "><span class="fa fa-image">Student List, Use Search Option to Get Focused List &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url_for('upgrade_profile')}}">[Reset & Show Full List]</a></span></h4>
+                 <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Student ID</th>
+                            <th>User Name</th>
+                            <th>Upgrade</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center">1</td>
+                                <td colspan=3>No Records for the Search Criteria </td>
+                            </tr>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% endif %}
+    
+    </body>
+
+</html>
+<script>
+    $(document).ready(function(){
+        $(".alert").hide(4000);
+    });
+</script>
