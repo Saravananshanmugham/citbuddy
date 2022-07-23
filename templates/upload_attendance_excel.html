@@ -45,7 +45,7 @@
                         <tbody>
                             <tr>
                                 <td style="text-align:center">{{i}}</td>
-                                <td><a href="{{url_for('view_attendance_data', id = res['pid'])}}" class="btn btn-primary btn-block">{{res['exceldata']}}</a></td>
+                                <td><a href="{{url_for('view_attendance_data', id = res['pid'])}}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">{{res['exceldata']}}</a></td>
                                 {% if res['dbupdate'] =='Y'%}
                                     <td><a href="" class="btn btn-primary btn-block" disabled>Attendance Data Uploaded to DB</a> </td>
                                 {% else %}
