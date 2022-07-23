@@ -185,7 +185,7 @@ def upload_attendance_excel():
     if request.method == 'POST':
         uploadExcel = request.files['uploadExcel']
         if uploadExcel.filename != '':
-            app.config['UPLOAD_FOLDER']="static\Attendance"
+            app.config['UPLOAD_FOLDER']= os.getcwd()+"/static"
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], uploadExcel.filename)
             uploadExcel.save(filepath)
             con = sqlite3.connect("IR40.db")
@@ -219,9 +219,10 @@ def view_attendance_data(id):
     cur = con.cursor()
     cur.execute("select * from attendance_data where pid=?",(id))
     data = cur.fetchall()
+    cwd = os.getcwd()+"/static"
     print(data)
     for val in data:
-        path = os.path.join("static/Attendance/",val[1])
+        path = os.path.join(cwd,val[1])
         print(val[1])
         data=pd.read_csv(path)
     con.close()
@@ -243,8 +244,9 @@ def insert_attendance_into_db(id):
     cur.execute("select * from attendance_data where pid=?",(id))
     data = cur.fetchall()
     print(data)
+    cwd = os.getcwd()+"/static"
     for val in data:
-        path = os.path.join("static/Attendance/",val[1])
+        path = os.path.join(cwd,val[1])
         print(val[1])
         df=pd.read_csv(path)
     con.close()
@@ -298,8 +300,9 @@ def delete_attendance_record(id):
         cur=con.cursor()
         cur.execute("select * from attendance_data where pid=?",(id))
         data = cur.fetchall()
+        cwd = os.getcwd()+"/static"
         for val in data:
-            path = os.path.join("static/Attendance/",val[1])
+            path = os.path.join(cwd,val[1])
             print(val[1])
         os.remove(path)    
 
