@@ -344,7 +344,7 @@ def upload_course():
     if request.method == 'POST':
         uploadExcel = request.files['uploadExcel']
         if uploadExcel.filename != '':
-            app.config['UPLOAD_FOLDER']="static\Course"
+            app.config['UPLOAD_FOLDER']= os.getcwd()+"/static"
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], uploadExcel.filename)
             uploadExcel.save(filepath)
             con = sqlite3.connect("IR40.db")
@@ -376,9 +376,10 @@ def view_course(id):
     cur = con.cursor()
     cur.execute("select * from Course_data where pid=?",(id))
     data = cur.fetchall()
+    cwd = os.getcwd()+"/static"
     print(data)
     for val in data:
-        path = os.path.join("static/Course/",val[1])
+        path = os.path.join(cwd,val[1])
         print(val[1])
         data=pd.read_csv(path)
     con.close()
@@ -398,9 +399,10 @@ def insert_course_into_db(id):
     cur = con.cursor()
     cur.execute("select * from Course_data where pid=?",(id))
     data = cur.fetchall()
+    cwd = os.getcwd()+"/static"
     print(data)
     for val in data:
-        path = os.path.join("static/Course/",val[1])
+        path = os.path.join(cwd,val[1])
         print(val[1])
         df=pd.read_csv(path)
     con.close()
@@ -451,8 +453,9 @@ def delete_course_record(id):
         cur=con.cursor()
         cur.execute("select * from Course_data where pid=?",(id))
         data = cur.fetchall()
+        cwd = os.getcwd()+"/static"
         for val in data:
-            path = os.path.join("static/Course/",val[1])
+            path = os.path.join(cwd,val[1])
             print(val[1])
         os.remove(path)    
 
