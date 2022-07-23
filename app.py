@@ -653,7 +653,7 @@ def attendance_stats():
     if len(data)==0:
         msg="No Attendance Records Found!.. Contact the Portal Admin."
         return render_template("message.html", msg=msg, ret="/menu")
-    return render_template("view_stats.html  ",data=data)   
+    return render_template("view_stats.html",data=data)   
 
 ################################################################################
 ## Upgrade a Student Profile to Admin User                                    ##
@@ -811,6 +811,25 @@ def deactivate_news_update():
         return redirect(url_for("deactivate_news"))
     
 
+@app.route("/view_attendance_master", methods=["POST","GET"])
+def view_attendance_master():
+    con = sqlite3.connect("IR40.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    sql_query = "select * from Attendance_Master"
+    cur.execute(sql_query)
+    rows = cur.fetchall()
+    return render_template("view_atable.html", rows=rows)
+
+@app.route("/view_course_master", methods=["POST","GET"])
+def view_course_master():
+    con = sqlite3.connect("IR40.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    sql_query = "select * from Course_Master"
+    cur.execute(sql_query)
+    rows = cur.fetchall()
+    return render_template("view_ctable.html", rows=rows)
 
 
 ################################################################################
