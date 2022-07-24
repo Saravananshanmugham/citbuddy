@@ -1,13 +1,13 @@
 <html>
     <head>
-        <title>Course Upload</title>
+        <title>Course Details Upload</title>
         <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
 		<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
     </head>
     <body>
         <div class="col-md-offset-3 col-md-5" style="margin-top:50px">
             <form action="/upload_course" method="POST" enctype="multipart/form-data">
-                <h3 class="page-header text-primary">Upload Course Details Excel File</h3>
+                <h3 class="page-header text-primary">Upload Course Details File</h3>
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
                         {% for category,message in messages %}
@@ -16,11 +16,11 @@
                     {% endif %}
                 {% endwith %}
                  <div class="form-group">
-                    <label>Browse Course Details Excel File</label>
+                    <label>Browse Course Details File</label>
                     <input type="file" class="form-control" name="uploadExcel">
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Upload Course Details Excel File" class="btn btn-primary btn-block">
+                    <input type="submit" value="Upload Course Details File" class="btn btn-primary btn-block">
                     <br>                    
                     <a href="/menu">Go to Main Menu</a>  
                 </div>
@@ -30,12 +30,12 @@
         {% if data %}
             <div class="row">
             <div class="col-md-offset-3 col-md-5">
-                <h3 class="page-header text-primary "><span class="fa fa-image">  Already Uploaded Course Details Excel File</span></h3>
+                <h3 class="page-header text-primary "><span class="fa fa-image">  Already Uploaded Course Details File</span></h3>
                  <table class="table table-bordered">
                       <thead>
                             <tr>
                             <th>S.No</th>
-                            <th>Course Details Excel File</th>
+                            <th>Course Details File</th>
                             <th>Database Update Status</th>
                             <th>Delete File</th>
                         </tr>
@@ -47,7 +47,7 @@
                                 <td style="text-align:center">{{i}}</td>
                                 <td><a href="{{url_for('view_course', id = res['pid'])}}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">{{res['exceldata']}}</a></td>
                                 {% if res['dbupdate'] =='Y'%}
-                                    <td><a href="" class="btn btn-primary btn-block" disabled>Course Data Uploaded to DB</a> </td>
+                                    <td>Course Data Uploaded to Database</td>
                                 {% else %}
                                 <td><a href="{{url_for('insert_course_into_db', id = res['pid'])}}" class="btn btn-primary btn-block" >Upload Course Data to Database</a> </td>
                                 {% endif %}

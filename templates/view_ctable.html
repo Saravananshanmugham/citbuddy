@@ -23,13 +23,13 @@
           text-align: left;
           background-color: #04AA6D;
           color: white;}
- 
-         table {
+
+          table {
                 font-family: Arial, Helvetica, sans-serif;
                 border-collapse: collapse;
                 width: 70%;
             }
-
+            
         table.center {
             margin-left: auto; 
             margin-right: auto;
@@ -42,12 +42,22 @@
 
 <table class="center">
     <tr>
-        <td><h3>Attendance Master</h3>     </td>
-        <td style="text-align:right" colspan=2><a href="/menu">Go to Main Menu</a>  </td>
+        <td style="text-align:left"><h3>Course Master</h3></td>
+        <td style="text-align:right" colspan=2><a href="/menu">Go to Main Menu</a></td>
     </tr>
+</table>
 </table>
 
 <table id="customers" class="center">
+    <tr>  
+        <th>Pid</th>  
+        <th>Dept. ID </th>  
+        <th>Semester</th>  
+        <th>Subject</th>  
+        <th>Faculty ID</th>  
+        <th>Course Credit</th>
+        <th>Course Duration</th>
+    </tr>  
      
     {% for row in rows %}  
         <tr>  
@@ -58,8 +68,6 @@
             <td>{{row[4]}}</td>  
             <td>{{row[5]}}</td>  
             <td>{{row[6]}}</td>  
-            <td>{{row[7]}}</td>  
-            <td>{{row[8]}}</td>  
         </tr>  
       
     {% endfor %}  

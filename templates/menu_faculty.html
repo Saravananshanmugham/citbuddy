@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Buddy Portal Home Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/vtickler.css') }}">
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/navbar_header.css') }}">
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/navbar_footer.css') }}">
+  <link rel="stylesheet"  href="{{ url_for('static', filename='css/navbar_side.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a class="active" href="/menu"><i class="fa fa-fw fa-home"></i> {{ name}} Home</a>
+        <a href="/view_contactus"><i class="fa fa-fw fa-envelope"></i> Contact Us</a>
+        <a href="/logout"><i class="fa fa-fe fa-user"></i> Logout</a>
+        
+      </div>
+<div class="jumbotron text-center" style="overflow-x: auto;">
+  
+  <table id="customers" class="center">
+    <tr>
+        <td>
+            <h2>Hi {{ name }}, Welcome to Buddy Portal</h2>
+        </td>
+    </tr>
+    <tr>
+        <td><p>This Buddy Portal is developed by Akshay Kumar (717621080xx), Karthick Srinivas S (71762108018), and 
+          R Subramanian (717621080xx) from Artifical Intelligence & Data Science Department 
+          as part of Industrial Revolution 4.0 Subject project.</p> </td>
+    </tr>
+</table>
+</div>
+  
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm-4">
+      <h3>Assignment Management</h3>
+        <p><a href="/upload_assignment"><img src="\static\images\caret-right.svg"> Assignment Document Upload</a></p>
+        <p><a href="/view_assignment"><img src="\static\images\caret-right.svg"> View Uploaded Assignments</a></p>
+    </div>
+    
+    <div class="col-sm-4">
+      <h3>Statistics</h3>        
+        <p><a href="/attendance_stats"><img src="\static\images\caret-right.svg"> Attendance Statistics</a></p>
+    </div>
+    
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-4">
+    </div>
+
+    <div class="col-sm-4">
+        &nbsp;
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+
+    <div class="col-sm-4">
+      &nbsp;
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ticker-wrapper-v">
+        <div class="heading">Department News</div>
+        <ul class="news-ticker-v">
+          {% for row in deptnews %}  
+            {% if row[2]|length > 1 %}
+              <li><a href="{{row[2]}}" target="_blank" rel="noopener noreferrer">{{row[1]}}</a></li>  
+            {% else %}
+              <li>{{row[1]}}</li>  
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<br>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="ticker-wrapper-v">
+        <div class="heading">Club News&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>
+        <ul class="news-ticker-v">
+          {% for row in clubnews %}  
+            <li><a href="{{row[2]}}" target="_blank" rel="noopener noreferrer">{{row[1]}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <h4>Faculty Profile</h4>
+</div>
+</body>
+</html>
+
