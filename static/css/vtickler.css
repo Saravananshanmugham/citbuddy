@@ -1,0 +1,62 @@
+        /*****************************
+        *	vertical news ticker
+        ******************************/
+        .ticker-wrapper-v{
+            display: flex;	
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #1c6547;
+            height: 36px;
+        }
+
+        .ticker-wrapper-v .heading{
+            background-color: #1c6547;
+            color: #fff;
+            padding: 5px 10px;
+            flex: 0 0 auto;
+            z-index: 1000;
+        }
+        .ticker-wrapper-v .heading:after{
+            content: "";
+            position: absolute;
+            top: 0;
+            border-left: 20px solid #1c6547;
+            border-top: 17px solid transparent;
+            border-bottom: 15px solid transparent;
+        }
+
+        .news-ticker-v{
+            display: flex;
+            flex-wrap: wrap;
+            margin:0;
+            padding: 0;
+            z-index: 999;
+            
+            animation: tic-v 10s cubic-bezier(1, 0, .5, 0) infinite;
+        }
+        .news-ticker-v:hover { 
+            animation-play-state: paused; 
+        }
+
+        .news-ticker-v li{
+            display: flex;
+            width: 100%;
+            line-height: 30px;
+            align-items: center;
+            white-space: nowrap;
+            padding-left: 20px;
+        }
+
+        .news-ticker-v li a{
+            color: #212529;
+            font-weight: bold;
+        }
+
+        @keyframes tic-v {
+            0%   {margin-top: 0;}
+            20%  {margin-top: -30px;}
+            40%  {margin-top: -60px;}
+            60%  {margin-top: -90px;}
+            80%  {margin-top: -120px;}
+            100% {margin-top: 0;}
+        }
