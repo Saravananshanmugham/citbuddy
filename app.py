@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-#from email import message
 from flask import *  
 import sqlite3
 import os
@@ -60,8 +59,14 @@ def login():
                         sql_query = "select * from clubnews where status='A'"
                         cur.execute(sql_query)
                         clubnews = cur.fetchall()
-
-                        return render_template("menu.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnews, clubnews=clubnews)
+                        if row["usergrp"]=="A":
+                            return render_template("menu_admin.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnews, clubnews=clubnews)
+                        elif row["usergrp"]=="S":
+                            return render_template("menu_student.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnews, clubnews=clubnews)
+                        elif row["usergrp"]=="F":
+                            return render_template("menu_faculty.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnews, clubnews=clubnews)
+                        elif row["usergrp"]=="Z":
+                            return render_template("menu_super.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnews, clubnews=clubnews)
                     else:
                         return render_template("message.html", msg="Password Does Not Match", ret="/")
         except:  
@@ -247,14 +252,9 @@ def insert_attendance_into_db(id):
     cwd = os.getcwd()+"/static"
     for val in data:
         path = os.path.join(cwd,val[1])
-        print(val[1])
         df=pd.read_csv(path)
-    con.close()
     
     try:
-        with sqlite3.connect("IR40.db") as con:
-            cur = con.cursor()  
-
             for i in range(len(df)):
                 Dept_id=int(df.iloc[i][0])
                 Semester=int(df.iloc[i][1])
@@ -271,18 +271,19 @@ def insert_attendance_into_db(id):
                     (?,?,?,?,?,?,?,?)"""
                 
                 cur.execute(insert_query,(Dept_id, Semester, Subject_Code, Faculty_id, Student_Code, Attendance_Date, Present_hours, Absent_hours))  
+                
+           
             con.commit()
-            msg ="Attendance Records Updated to Database"
-
             cur.execute("update attendance_data set dbupdate='Y' where pid=?",[id])
-            con.commit
+            con.commit()           
     except:  
         con.rollback()  
-        msg = "Database Insert Error!, Attendance Data Not Uploaded."  
+        flash("Database Insert Error!, Attendance Data Not Uploaded.","danger")  
     
-    finally:  
+    finally:
         con.close()  
-        return render_template("message.html",msg = msg, ret="/upload_attendance_excel")  
+        flash("Record Updated Successfully","success")  
+        return redirect(url_for("upload_attendance_excel"))
         
 
 ################################################################################
@@ -303,7 +304,6 @@ def delete_attendance_record(id):
         cwd = os.getcwd()+"/static"
         for val in data:
             path = os.path.join(cwd,val[1])
-            print(val[1])
         os.remove(path)    
 
         cur.execute("delete from attendance_data where pid=?",[id])
@@ -403,41 +403,40 @@ def insert_course_into_db(id):
     print(data)
     for val in data:
         path = os.path.join(cwd,val[1])
-        print(val[1])
         df=pd.read_csv(path)
-    con.close()
     
     try:
-        with sqlite3.connect("IR40.db") as con:
-            cur = con.cursor()  
-
-            for i in range(len(df)):
-                Dept_id=int(df.iloc[i][0])
-                Semester=int(df.iloc[i][1])
-                Subject_Code=df.iloc[i][2]
-                Faculty_id=int(df.iloc[i][3])
-                Course_Credit=int(df.iloc[i][4])
-                Course_Duration=int(df.iloc[i][5])
+        for i in range(len(df)):
+            Dept_id=int(df.iloc[i][0])
+            Semester=int(df.iloc[i][1])
+            Subject_Code=df.iloc[i][2]
+            Faculty_id=int(df.iloc[i][3])
+            Course_Credit=int(df.iloc[i][4])
+            Course_Duration=int(df.iloc[i][5])
                 
-                insert_query =""" INSERT into Course_Master
-                    (Dept_id, Semester, Subject_Code, Faculty_id, Course_Credit, Course_Duration)
-                    values 
-                    (?,?,?,?,?,?)"""
+            insert_query =""" INSERT into Course_Master
+                (Dept_id, Semester, Subject_Code, Faculty_id, Course_Credit, Course_Duration)
+                values 
+                (?,?,?,?,?,?)"""
                 
-                cur.execute(insert_query,(Dept_id, Semester, Subject_Code, Faculty_id, Course_Credit, Course_Duration))  
-            con.commit()
-            msg ="Course Details Updated to Database"
+            cur.execute(insert_query,(Dept_id, Semester, Subject_Code, Faculty_id, Course_Credit, Course_Duration))  
+        
+        con.commit()
 
-            cur.execute("update Course_data set dbupdate='Y' where pid=?",[id])
-            con.commit
+        cur.execute("update Course_data set dbupdate='Y' where pid=?",[id])
+        con.commit()
+        cur.execute("select * from Course_data")
+        data = cur.fetchall()
     except:  
         con.rollback()  
-        msg = "Database Insert Error!, Attendance Data Not Uploaded."  
-    
+        con.close()
+        flash("Record Update Failed","danger") 
+        return redirect(url_for("upload_course")) 
     finally:  
-        return render_template("message.html",msg = msg, ret="/upload_course")  
         con.close()  
-
+        flash("Record Updated Successfully","success")  
+        return redirect(url_for("upload_course"))   
+    
 ################################################################################
 ## Delete the Course Details Data                                             ##
 ## -------------------------------                                            ##
@@ -465,8 +464,9 @@ def delete_course_record(id):
     except:
         flash("Record Deleted Failed", "danger")
     finally:
-        return redirect(url_for("upload_course"))
         con.close()
+        return redirect(url_for("upload_course"))
+
 
 
 ################################################################################
@@ -605,14 +605,22 @@ def menu_display():
     with sqlite3.connect("IR40.db") as con:  
         con.row_factory = sqlite3.Row 
         cur = con.cursor()  
+
         sql_query = "select * from deptnews"
         cur.execute(sql_query)
-        deptnew = cur.fetchall()
+        deptnews = cur.fetchall()
 
         sql_query = "select * from clubnews"
         cur.execute(sql_query)
         clubnews = cur.fetchall()
-        return render_template("menu.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnew, clubnews=clubnews )
+        if session['usergroup']=="A":
+            return render_template("menu_admin.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnews, clubnews=clubnews)
+        elif session['usergroup']=="S":
+            return render_template("menu_student.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnews, clubnews=clubnews)
+        elif session['usergroup']=="F":
+            return render_template("menu_faculty.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnews, clubnews=clubnews)
+        elif session['usergroup']=="Z":
+            return render_template("menu_super.html", name=session['Name'],usrgrp=session['usergroup'], userid=session['userid'],deptnews=deptnews, clubnews=clubnews)
 
 
 ################################################################################
