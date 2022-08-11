@@ -58,10 +58,10 @@ print("Table Course_data created successfully...")
 
 
 create_table= """create table if not exists assignments (
-    pid integer primary key,
+    pid integer primary key AUTOINCREMENT,
     assign_file TEXT,
-    upload_date TEXT,
-    due_date TEXT
+    upload_date TEXT  DEFAULT (CURRENT_DATE),
+    due_date TEXT DEFAULT (CURRENT_DATE)
     )
     """
 con.execute(create_table)  

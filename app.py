@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from flask import *  
 import sqlite3
 import os
@@ -491,8 +490,8 @@ def upload_assignment():
     cur = con.cursor()
 
     select_query = """ SELECT pid, assign_file,
-       STRFTIME('%d-%m-%Y %H:%M', upload_date), 
-       STRFTIME('%d-%m-%Y %H:%M', due_date), 
+       STRFTIME('%d-%m-%Y', upload_date), 
+       STRFTIME('%d-%m-%Y', due_date), 
        cast ((JulianDay(due_date) - JulianDay()) as integer) as difference       
        FROM assignments order by difference ASC"""
 
@@ -511,12 +510,10 @@ def upload_assignment():
             cur = con.cursor()
 
             insert_query ="""insert into assignments
-            (assign_file,upload_date,due_date)
+            (assign_file,due_date)
             values
-            (?,?,?)"""
-            n = dt.datetime.today()
-            tday = str(n.date())+" "+str(n.hour)+":"+str(n.minute)+":"+str(n.second)
-            cur.execute(insert_query, (uploadassignment.filename,tday,duedate))
+            (?,?)"""
+            cur.execute(insert_query, (uploadassignment.filename,duedate))
             con.commit()
             flash("Assignment Document Uploaded Successfully", "success")
 
@@ -570,8 +567,8 @@ def view_assignment():
     con.row_factory = sqlite3.Row
     cur = con.cursor()
     select_query = """ SELECT pid, assign_file,
-       STRFTIME('%d-%m-%Y %H:%M', upload_date), 
-       STRFTIME('%d-%m-%Y %H:%M', due_date), 
+       STRFTIME('%d-%m-%Y', upload_date), 
+       STRFTIME('%d-%m-%Y', due_date), 
        cast ((JulianDay(due_date) - JulianDay()) as integer) as difference       
        FROM assignments order by difference ASC"""
 
